@@ -1,52 +1,37 @@
 package com.project.tk.o0729_expandable_recyclerview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.project.tk.o0729_expandable_recyclerview.ex_basic.ExListBasic;
+import com.project.tk.o0729_expandable_recyclerview.ex_two.ExListTwo;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView recyclerview;
-    private List<Item> itemList;
+    private Button btn1, btn2, btn3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        btn1=(Button)findViewById(R.id.button1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ExListBasic.class));
+            }
+        });
 
-        itemList = new ArrayList<>();
+        btn2=(Button)findViewById(R.id.button2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ExListTwo.class));
+            }
+        });
 
-        add(ExListAdapter.HEADER, "Fruits");
-        add(ExListAdapter.CHILD, "Apple");
-        add(ExListAdapter.CHILD, "Orange");
-        add(ExListAdapter.CHILD, "Banana");
-        add(ExListAdapter.HEADER, "Cars");
-        add(ExListAdapter.CHILD, "Audi");
-        add(ExListAdapter.CHILD, "Aston");
-        add(ExListAdapter.CHILD, "BMW");
-        add(ExListAdapter.CHILD, "Cadillac");
-
-
-        Item item = new Item(ExListAdapter.HEADER, "Places");
-
-        item.inItems = new ArrayList<>();
-        item.inItems.add(new Item(ExListAdapter.CHILD, "Kerala"));
-        item.inItems.add(new Item(ExListAdapter.CHILD, "Tamil"));
-        item.inItems.add(new Item(ExListAdapter.CHILD, "Karnataka"));
-        item.inItems.add(new Item(ExListAdapter.CHILD, "Maharashtra"));
-
-        itemList.add(item);
-
-        recyclerview.setAdapter(new ExListAdapter(this.itemList));
-    }
-
-    private void add(int type, String text){
-        itemList.add(new Item(type,text));
     }
 }

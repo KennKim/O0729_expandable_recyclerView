@@ -1,4 +1,4 @@
-package com.project.tk.o0729_expandable_recyclerview;
+package com.project.tk.o0729_expandable_recyclerview.ex_basic.data;
 
 import java.util.List;
 

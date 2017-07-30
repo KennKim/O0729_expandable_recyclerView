@@ -1,4 +1,4 @@
-package com.project.tk.o0729_expandable_recyclerview;
+package com.project.tk.o0729_expandable_recyclerview.ex_two;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,17 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.project.tk.o0729_expandable_recyclerview.R;
+import com.project.tk.o0729_expandable_recyclerview.ex_two.data.MyData;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ExListTwoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static final int HEADER = 0;
     static final int CHILD = 1;
 
-    private List<Item> items;
+    private List<MyData> items;
 
-    ExListAdapter(List<Item> data) {
+    ExListTwoAdapter(List<MyData> data) {
         this.items = data;
     }
 
@@ -30,7 +33,7 @@ public class ExListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case HEADER:
                 LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.list_header, parent, false);
-                return new ViewHolderHeader(view);
+                return new ViewHolderUp(view);
             case CHILD:
                 LayoutInflater inflater1 = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater1.inflate(R.layout.list_child, parent, false);
@@ -43,16 +46,16 @@ public class ExListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 return new RecyclerView.ViewHolder(itemTextView) {
 
                 };*/
-                return new ViewHolderChild(view);
+                return new ViewHolderDown(view);
         }
         return null;
     }
 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final Item item = items.get(position);
+        final MyData item = items.get(position);
         switch (item.type) {
             case HEADER:
-                final ViewHolderHeader listHeaderViewHolder = (ViewHolderHeader) holder;
+                final ViewHolderUp listHeaderViewHolder = (ViewHolderUp) holder;
                 listHeaderViewHolder.item = item;
                 listHeaderViewHolder.tvHeader.setText(item.text);
                 if (item.inItems == null) {
@@ -64,7 +67,7 @@ public class ExListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     @Override
                     public void onClick(View v) {
                         if (item.inItems == null) {
-                            item.inItems = new ArrayList<Item>();
+                            item.inItems = new ArrayList<MyData>();
                             int count = 0;
                             int pos = items.indexOf(listHeaderViewHolder.item);
                             while (items.size() > pos + 1 && items.get(pos + 1).type == CHILD) {
@@ -76,7 +79,7 @@ public class ExListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         } else {
                             int pos = items.indexOf(listHeaderViewHolder.item);
                             int index = pos + 1;
-                            for (Item i : item.inItems) {
+                            for (MyData i : item.inItems) {
                                 items.add(index, i);
                                 index++;
                             }
@@ -91,7 +94,7 @@ public class ExListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 /*TextView itemTextView = (TextView) holder.itemView;
                 itemTextView.setText(items.get(position).text);
                 break;*/
-                ViewHolderChild viewHolderChild = (ViewHolderChild)holder;
+                ViewHolderDown viewHolderChild = (ViewHolderDown)holder;
                 viewHolderChild.tvChild.setText(items.get(position).text);
                 break;
         }
